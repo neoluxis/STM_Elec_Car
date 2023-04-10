@@ -32,3 +32,4 @@
 ..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: ..\SYSTEM\sys\sys.h
 ..\obj\main.o: ..\HARDWARE\oled\oled.h
+..\obj\main.o: ..\HARDWARE\motor\motor.h
