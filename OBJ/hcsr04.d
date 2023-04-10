@@ -29,3 +29,5 @@
 ..\obj\hcsr04.o: ..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h
 ..\obj\hcsr04.o: ..\STM32F10x_FWLib\inc\misc.h
 ..\obj\hcsr04.o: ..\HARDWARE\ultrasonic\hcsr04.h
+..\obj\hcsr04.o: ..\SYSTEM\delay\delay.h
+..\obj\hcsr04.o: ..\SYSTEM\sys\sys.h

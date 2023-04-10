@@ -3,11 +3,11 @@
 
 void HCSR_Init(HCSR04_InitStruct* HCSR04){
 	GPIO_InitTypeDef GPIO_InitSructure;
-	NVIC_InitTypeDef NVIC_InitSructure;
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStrure;  
-	
+	NVIC_InitTypeDef NVIC_InitSructure;
+
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	RCC_APB1PeriphClockCmd(HCSR04->RCC_APB1Periph_TIM, ENABLE);
 	
 	//Trigger Pin & Echo Pin
 	GPIO_InitSructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -28,11 +28,30 @@ void HCSR_Init(HCSR04_InitStruct* HCSR04){
 	TIM_TimeBaseInit(HCSR04->HCSR_Timer,&TIM_TimeBaseStrure);
 	
 	TIM_ITConfig(HCSR04->HCSR_Timer,TIM_IT_Update,ENABLE);  //ê1?ü?D??
-	NVIC_InitSructure.NVIC_IRQChannel = TIM4_IRQn;
-	NVIC_InitSructure.NVIC_IRQChannelPreemptionPriority = 1;  //?à??ó??è??2??
-	NVIC_InitSructure.NVIC_IRQChannelSubPriority = 1;  //′óó??è??0??
-	NVIC_InitSructure.NVIC_IRQChannelCmd = ENABLE;  //IRQí¨μàê1?ü
+	
+	NVIC_InitSructure.NVIC_IRQChannel=HCSR04->NVIC_IRQChannel;
+	NVIC_InitSructure.NVIC_IRQChannelPreemptionPriority = 1;  //抢占优先级2级
+	NVIC_InitSructure.NVIC_IRQChannelSubPriority = 1;  //从优先级0级
+	NVIC_InitSructure.NVIC_IRQChannelCmd = ENABLE;  //IRQ通道使能
+
 	NVIC_Init(&NVIC_InitSructure);
 	
 	TIM_Cmd(HCSR04->HCSR_Timer,ENABLE);
 }
+
+int ReadDistance(HCSR04_InitStruct* HCSR04){
+	GPIO_ResetBits(HCSR04->TriggerPort,HCSR04->TriggerPin);  //预先拉低输出引脚
+	GPIO_SetBits(HCSR04->TriggerPort,HCSR04->TriggerPin);
+	delay_us(10);
+	GPIO_ResetBits(HCSR04->TriggerPort,HCSR04->TriggerPin);  //产生10us脉冲
+	while(GPIO_ReadInputDataBit(HCSR04->EchoPort,HCSR04->EchoPin) == 0);
+	HCSR04->HCSR_Timer->CNT=0;
+	
+	while(GPIO_ReadInputDataBit(HCSR04->EchoPort,HCSR04->EchoPin) == 1);
+	HCSR04->count = HCSR04->HCSR_Timer->CNT;
+	
+	HCSR04->distance = (float)HCSR04->count/58;
+	return HCSR04->distance;
+}
+
+

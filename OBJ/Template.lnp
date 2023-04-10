@@ -34,7 +34,8 @@
 "..\obj\led.o"
 "..\obj\oled.o"
 "..\obj\hcsr04.o"
---strict --scatter "..\OBJ\Template.sct"
+"..\obj\motor.o"
+--library_type=microlib --strict --scatter "..\OBJ\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Template.map" -o ..\OBJ\Template.axf
