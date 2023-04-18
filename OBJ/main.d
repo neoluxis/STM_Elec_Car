@@ -29,7 +29,8 @@
 ..\obj\main.o: ..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h
 ..\obj\main.o: ..\STM32F10x_FWLib\inc\misc.h
 ..\obj\main.o: ..\HARDWARE\ultrasonic\hcsr04.h
+..\obj\main.o: ..\HARDWARE\oled\oled.h
 ..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: ..\SYSTEM\sys\sys.h
-..\obj\main.o: ..\HARDWARE\oled\oled.h
-..\obj\main.o: ..\HARDWARE\motor\motor.h
+..\obj\main.o: ..\SYSTEM\usart\usart.h
+..\obj\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
