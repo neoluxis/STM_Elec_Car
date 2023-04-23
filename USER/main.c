@@ -14,6 +14,8 @@
 #include "delay.h"
 #include "usart.h"
 #include "motor.h"
+#include "main.h"
+
 /**
  * @brief Motor object, front, left, right
  *
@@ -71,9 +73,12 @@ int main(void)
 	while (1)
 	{
 		d_f = HCSR04_GetDistance(&front);
+		delay_ms(5);
 		d_l = HCSR04_GetDistance(&left);
+		delay_ms(5);
 		d_r = HCSR04_GetDistance(&right);
-		printf("\r\n%d,%d,%d", d_f, d_l, d_r);
+		delay_ms(5);
+		info("%d, %d, %d", d_l, d_r, d_f);
 		Dir_Ctrl();
 	}
 	// return 0;
@@ -150,9 +155,9 @@ void MOTOR_Dir_Init(void)
 		motor_l.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM2;
 		motor_l.TIMx = TIM2;
 		motor_l.IN1_Port = GPIOC;
-		motor_l.IN1_Pin = GPIO_Pin_4;
+		motor_l.IN1_Pin = GPIO_Pin_10;
 		motor_l.IN2_Port = GPIOC;
-		motor_l.IN2_Pin = GPIO_Pin_3;
+		motor_l.IN2_Pin = GPIO_Pin_11;
 		motor_l.OCx = TIM_OC1Init;
 		motor_l.OCx_PreloadConfig = TIM_OC1PreloadConfig;
 		motor_l.SetCompare = TIM_SetCompare1;
@@ -169,10 +174,10 @@ void MOTOR_Dir_Init(void)
 		motor_r.RCC_APBxPeriph_GPIOx_IN2 = RCC_APB2Periph_GPIOC;
 		motor_r.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM2;
 		motor_r.TIMx = TIM2;
-		motor_r.IN1_Port = GPIOC;
-		motor_r.IN1_Pin = GPIO_Pin_6;
-		motor_r.IN2_Port = GPIOC;
-		motor_r.IN2_Pin = GPIO_Pin_5;
+		motor_r.IN1_Port = GPIOB;
+		motor_r.IN1_Pin = GPIO_Pin_5;
+		motor_r.IN2_Port = GPIOB;
+		motor_r.IN2_Pin = GPIO_Pin_6;
 		motor_r.OCx = TIM_OC2Init;
 		motor_r.OCx_PreloadConfig = TIM_OC2PreloadConfig;
 		motor_r.SetCompare = TIM_SetCompare2;
