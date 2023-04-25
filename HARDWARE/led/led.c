@@ -4,7 +4,7 @@
 void LED_Init()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // æŽ¨æŒ½è¾“å‡º
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	// LED0
 	GPIO_InitStructure.GPIO_Pin = LED0_GPIO_Pin;

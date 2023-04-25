@@ -9,50 +9,50 @@ void MOTOR_SingleInit(MOTOR_Structure *motor,
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 
-	// Ê¹ÄÜGPIOÍâÉèÄ£¿éÊ±ÖÓ, ÓÃÓÚPWMµ÷ËÙ
+	// ä½¿èƒ½GPIOå¤–è®¾æ¨¡å—æ—¶é’Ÿ, ç”¨äºŽPWMè°ƒé€Ÿ
 	RCC_APB2PeriphClockCmd(motor->RCC_APBxPeriph_GPIOx_ENABLE, ENABLE);
 
-	// ÉèÖÃÒý½ÅÎª¸´ÓÃÊä³ö¹¦ÄÜ,Êä³öTIMxµÄPWMÂö³å²¨ÐÎ
+	// è®¾ç½®å¼•è„šä¸ºå¤ç”¨è¾“å‡ºåŠŸèƒ½,è¾“å‡ºTIMxçš„PWMè„‰å†²æ³¢å½¢
 	GPIO_InitStructure.GPIO_Pin = motor->ENABLE_Pin;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; // ¸´ÓÃÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; // å¤ç”¨æŽ¨æŒ½è¾“å‡º
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(motor->ENABLE_Port, &GPIO_InitStructure); // ³õÊ¼»¯GPIO
+	GPIO_Init(motor->ENABLE_Port, &GPIO_InitStructure); // åˆå§‹åŒ–GPIO
 
-	// Ê¹ÄÜGPIOÍâÉèÄ£¿éÊ±ÖÓ, ÓÃÓÚ·½Ïò¿ØÖÆ
+	// ä½¿èƒ½GPIOå¤–è®¾æ¨¡å—æ—¶é’Ÿ, ç”¨äºŽæ–¹å‘æŽ§åˆ¶
 	RCC_APB2PeriphClockCmd(motor->RCC_APBxPeriph_GPIOx_IN1, ENABLE);
 	RCC_APB2PeriphClockCmd(motor->RCC_APBxPeriph_GPIOx_IN2, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = motor->IN1_Pin;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // æŽ¨æŒ½è¾“å‡º
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(motor->IN1_Port, &GPIO_InitStructure); // ³õÊ¼»¯GPIO IN1
+	GPIO_Init(motor->IN1_Port, &GPIO_InitStructure); // åˆå§‹åŒ–GPIO IN1
 	GPIO_InitStructure.GPIO_Pin = motor->IN2_Pin;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // æŽ¨æŒ½è¾“å‡º
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(motor->IN2_Port, &GPIO_InitStructure); // ³õÊ¼»¯GPIO IN2
+	GPIO_Init(motor->IN2_Port, &GPIO_InitStructure); // åˆå§‹åŒ–GPIO IN2
 
-	// Ä¬ÈÏÉèÖÃÎªÍ£Ö¹×´Ì¬
+	// é»˜è®¤è®¾ç½®ä¸ºåœæ­¢çŠ¶æ€
 	GPIO_ResetBits(motor->IN1_Port, motor->IN1_Pin); // IN1 = 0
 	GPIO_ResetBits(motor->IN2_Port, motor->IN2_Pin); // IN2 = 0
 
-	// Ê¹ÄÜ¶¨Ê±Æ÷2Ê±ÖÓ
+	// ä½¿èƒ½å®šæ—¶å™¨2æ—¶é’Ÿ
 	RCC_APB1PeriphClockCmd(motor->RCC_APBxPeriph_TIMx, ENABLE);
-	// ³õÊ¼»¯TIM2
-	TIM_TimeBaseStructure.TIM_Period = arr;						// ÉèÖÃÔÚÏÂÒ»¸ö¸üÐÂÊÂ¼þ×°Èë»î¶¯µÄ×Ô¶¯ÖØ×°ÔØ¼Ä´æÆ÷ÖÜÆÚµÄÖµ
-	TIM_TimeBaseStructure.TIM_Prescaler = psc;					// ÉèÖÃÓÃÀ´×÷ÎªTIMxÊ±ÖÓÆµÂÊ³ýÊýµÄÔ¤·ÖÆµÖµ
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;				// ÉèÖÃÊ±ÖÓ·Ö¸î:TDTS = Tck_tim
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; // TIMÏòÉÏ¼ÆÊýÄ£Ê½
-	TIM_TimeBaseInit(motor->TIMx, &TIM_TimeBaseStructure);		// ¸ù¾ÝTIM_TimeBaseInitStructÖÐÖ¸¶¨µÄ²ÎÊý³õÊ¼»¯TIMxµÄÊ±¼ä»ùÊýµ¥Î»
+	// åˆå§‹åŒ–TIM2
+	TIM_TimeBaseStructure.TIM_Period = arr;						// è®¾ç½®åœ¨ä¸‹ä¸€ä¸ªæ›´æ–°äº‹ä»¶è£…å…¥æ´»åŠ¨çš„è‡ªåŠ¨é‡è£…è½½å¯„å­˜å™¨å‘¨æœŸçš„å€¼
+	TIM_TimeBaseStructure.TIM_Prescaler = psc;					// è®¾ç½®ç”¨æ¥ä½œä¸ºTIMxæ—¶é’Ÿé¢‘çŽ‡é™¤æ•°çš„é¢„åˆ†é¢‘å€¼
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;				// è®¾ç½®æ—¶é’Ÿåˆ†å‰²:TDTS = Tck_tim
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; // TIMå‘ä¸Šè®¡æ•°æ¨¡å¼
+	TIM_TimeBaseInit(motor->TIMx, &TIM_TimeBaseStructure);		// æ ¹æ®TIM_TimeBaseInitStructä¸­æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–TIMxçš„æ—¶é—´åŸºæ•°å•ä½
 
-	// ³õÊ¼»¯TIM2 Channe1234 PWMÄ£Ê½
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;			  // Ñ¡Ôñ¶¨Ê±Æ÷Ä£Ê½:TIMÂö³å¿í¶Èµ÷ÖÆÄ£Ê½1
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; // ±È½ÏÊä³öÊ¹ÄÜ
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;	  // Êä³ö¼«ÐÔ:TIMÊä³ö±È½Ï¼«ÐÔ¸ß,¸ßµçÆ½ÓÐÐ§
+	// åˆå§‹åŒ–TIM2 Channe1234 PWMæ¨¡å¼
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;			  // é€‰æ‹©å®šæ—¶å™¨æ¨¡å¼:TIMè„‰å†²å®½åº¦è°ƒåˆ¶æ¨¡å¼1
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; // æ¯”è¾ƒè¾“å‡ºä½¿èƒ½
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;	  // è¾“å‡ºæžæ€§:TIMè¾“å‡ºæ¯”è¾ƒæžæ€§é«˜,é«˜ç”µå¹³æœ‰æ•ˆ
 
-	motor->OCx(motor->TIMx, &TIM_OCInitStructure); // ¸ù¾ÝTÖ¸¶¨µÄ²ÎÊý³õÊ¼»¯ÍâÉèTIM2 OC1
+	motor->OCx(motor->TIMx, &TIM_OCInitStructure); // æ ¹æ®TæŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–å¤–è®¾TIM2 OC1
 
-	motor->OCx_PreloadConfig(motor->TIMx, TIM_OCPreload_Enable); // Ê¹ÄÜTIM2ÔÚCCR1ÉÏµÄÔ¤×°ÔØ¼Ä´æÆ÷
+	motor->OCx_PreloadConfig(motor->TIMx, TIM_OCPreload_Enable); // ä½¿èƒ½TIM2åœ¨CCR1ä¸Šçš„é¢„è£…è½½å¯„å­˜å™¨
 
-	TIM_Cmd(motor->TIMx, ENABLE); // Ê¹ÄÜTIM2
+	TIM_Cmd(motor->TIMx, ENABLE); // ä½¿èƒ½TIM2
 }
 
 void MOTOR_SetSpeed(MOTOR_Structure *motor, uint16_t cmp)

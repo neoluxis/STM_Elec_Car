@@ -3,9 +3,9 @@
 
 void HCSR04_Init(HCSR04_Structure *hcsr04)
 {
-	GPIO_InitTypeDef GPIO_InitSructure;			// GPIO³õÊ¼»¯
-	NVIC_InitTypeDef NVIC_InitSructure;			// ¶¨Ê±Æ÷³õÊ¼»¯
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStrure; // Íâ²¿ÖÐ¶Ï³õÊ¼»¯
+	GPIO_InitTypeDef GPIO_InitSructure;			// GPIOåˆå§‹åŒ–
+	NVIC_InitTypeDef NVIC_InitSructure;			// å®šæ—¶å™¨åˆå§‹åŒ–
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStrure; // å¤–éƒ¨ä¸­æ–­åˆå§‹åŒ–
 
 	hcsr04->RCC_APBxPeriphClockCmd_Trigger(hcsr04->RCC_APBxPeriph_GPIOx_Trigger, ENABLE); // enable trigger gpio clock
 	hcsr04->RCC_APBxPeriphClockCmd_Echo(hcsr04->RCC_APBxPeriph_GPIOx_Echo, ENABLE);		  // enable echo gpio clock
@@ -26,15 +26,15 @@ void HCSR04_Init(HCSR04_Structure *hcsr04)
 	// timer, overflow time t = (arr + 1) * (psc + 1) / 72000000
 	TIM_TimeBaseStrure.TIM_Period = 49999;					 // 50000 * 1 / 72000000 = 0.000694444s = 694.444us
 	TIM_TimeBaseStrure.TIM_Prescaler = 72 - 1;				 // 72 * 1 / 72000000 = 0.000001s = 1us
-	TIM_TimeBaseStrure.TIM_ClockDivision = TIM_CKD_DIV1;	 // Ê±ÖÓ·ÖÆµÒò×Ó
-	TIM_TimeBaseStrure.TIM_CounterMode = TIM_CounterMode_Up; // ÏòÉÏ¼ÆÊý
-	TIM_TimeBaseInit(hcsr04->TIMx, &TIM_TimeBaseStrure);	 // ³õÊ¼»¯¶¨Ê±Æ÷
+	TIM_TimeBaseStrure.TIM_ClockDivision = TIM_CKD_DIV1;	 // æ—¶é’Ÿåˆ†é¢‘å› å­
+	TIM_TimeBaseStrure.TIM_CounterMode = TIM_CounterMode_Up; // å‘ä¸Šè®¡æ•°
+	TIM_TimeBaseInit(hcsr04->TIMx, &TIM_TimeBaseStrure);	 // åˆå§‹åŒ–å®šæ—¶å™¨
 
-	TIM_ITConfig(hcsr04->TIMx, TIM_IT_Update, ENABLE); // Ê¹ÄÜÖÐ¶Ï
+	TIM_ITConfig(hcsr04->TIMx, TIM_IT_Update, ENABLE); // ä½¿èƒ½ä¸­æ–­
 	NVIC_InitSructure.NVIC_IRQChannel = hcsr04->NVIC_IRQ_Channel;
-	NVIC_InitSructure.NVIC_IRQChannelPreemptionPriority = 1; // ÇÀÕ¼ÓÅÏÈ¼¶2¼¶
-	NVIC_InitSructure.NVIC_IRQChannelSubPriority = 1;		 // ´ÓÓÅÏÈ¼¶0¼¶
-	NVIC_InitSructure.NVIC_IRQChannelCmd = ENABLE;			 // IRQÍ¨µÀÊ¹ÄÜ
+	NVIC_InitSructure.NVIC_IRQChannelPreemptionPriority = 1; // æŠ¢å ä¼˜å…ˆçº§2çº§
+	NVIC_InitSructure.NVIC_IRQChannelSubPriority = 1;		 // ä»Žä¼˜å…ˆçº§0çº§
+	NVIC_InitSructure.NVIC_IRQChannelCmd = ENABLE;			 // IRQé€šé“ä½¿èƒ½
 	NVIC_Init(&NVIC_InitSructure);
 
 	TIM_Cmd(hcsr04->TIMx, ENABLE);
@@ -52,8 +52,10 @@ float HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 	while (GPIO_ReadInputDataBit(hcsr04->EchoPort, hcsr04->EchoPin) == 1)
 		;
 	hcsr04->count = TIM_GetCounter(hcsr04->TIMx);
-
-	hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715
+	if ((float)hcsr04->count / 58 < 100)
+	{
+		hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715
+	}
 	return hcsr04->distance;
 }
 

@@ -10,7 +10,7 @@
 			"titleBar.activeBackground": "#384508",
 			"titleBar.activeForeground": "#F8FCE6"
 		},
-		"files.encoding": "gbk",
+		"files.encoding": "utf8",
 		"files.associations": {
 			"key.h": "c",
 			"led.h": "c",

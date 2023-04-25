@@ -22,7 +22,7 @@
  */
 HCSR04_Structure front, left, right;
 /**
- * @brief Motor object, left, right
+ * @brief Motor object, left, right 
  *
  */
 MOTOR_Structure motor_l, motor_r;
@@ -64,7 +64,7 @@ int main(void)
 	// Initialise
 	{
 		delay_init();
-		uart_init(9600);
+		uart_init(1152000);
 		OLED_Init();
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
