@@ -122,26 +122,22 @@ uint32_t oled_pow(uint8_t m, uint8_t n)
 // len :数字长度
 // size:数字总体所占空间大小
 // num:(0~4294967295);
-void OLED_ShowNum(uint8_t x, uint8_t y, uint32_t num, uint8_t len, uint8_t size)
+void OLED_ShowNumber(uint8_t x, uint8_t y, double num)
 {
-	uint8_t t, temp;
-	uint8_t enshow = 0;
-	for (t = 0; t < len; t++)
-	{
-		temp = (num / oled_pow(10, len - t - 1)) % 10;
-		if (enshow == 0 && t < (len - 1))
-		{
-			if (temp == 0)
-			{
-				OLED_ShowChar(x + (size / 2) * t, y, ' ');
-				continue;
-			}
-			else
-				enshow = 1;
-		}
-		OLED_ShowChar(x + (size / 2) * t, y, temp + '0');
-	}
+	char str[30];
+	sprintf(str, "%f", num);
+	OLED_ShowString(x, y, str);
+	free(str);
 }
+
+void OLED_ShowInteger(uint8_t x, uint8_t y, int num)
+{
+	char str[30];
+	sprintf(str, "%d", num);
+	OLED_ShowString(x, y, str);
+	free(str);
+}
+
 // 显示字母
 void OLED_ShowString(uint8_t x, uint8_t y, uint8_t *chr)
 {

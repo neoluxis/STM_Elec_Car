@@ -64,6 +64,6 @@ void HCSR04_Init(HCSR04_Structure *hcsr04);
  * @param hcsr04 HCSR04 Structure
  * @return float distance
  */
-float HCSR04_GetDistance(HCSR04_Structure *hcsr04);
+double HCSR04_GetDistance(HCSR04_Structure *hcsr04);
 
 #endif

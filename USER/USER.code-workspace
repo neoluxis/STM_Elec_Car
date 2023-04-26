@@ -15,7 +15,8 @@
 			"key.h": "c",
 			"led.h": "c",
 			"motor.h": "c",
-			"hcsr04.h": "c"
+			"hcsr04.h": "c",
+			"cstdio": "c"
 		}
 	}
 }

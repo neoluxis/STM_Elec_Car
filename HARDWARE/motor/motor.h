@@ -3,10 +3,10 @@
 
 #include "stm32f10x.h"
 
-#define MOTOR_FORWARD 1  // 0b0001, ÏòÇ°
-#define MOTOR_BACKWARD 0 // 0b0000, Ïòºó
-#define MOTOR_NOWORK 2   // 0b0010, ²»¹¤×÷
-#define MOTOR_BRAKE 3    // 0b0011, É²³µ
+#define MOTOR_FORWARD 1  // 0b0001, å‰
+#define MOTOR_BACKWARD 0 // 0b0000, å
+#define MOTOR_NOWORK 2   // 0b0010, åœæ­¢
+#define MOTOR_BRAKE 3    // 0b0011, åˆ¹è½¦
 
 /**
  * @brief Motor object

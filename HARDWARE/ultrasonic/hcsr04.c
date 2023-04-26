@@ -40,7 +40,7 @@ void HCSR04_Init(HCSR04_Structure *hcsr04)
 	TIM_Cmd(hcsr04->TIMx, ENABLE);
 }
 
-float HCSR04_GetDistance(HCSR04_Structure *hcsr04)
+double HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 {
 	GPIO_ResetBits(hcsr04->TriggerPort, hcsr04->TriggerPin); // trigger low
 	GPIO_SetBits(hcsr04->TriggerPort, hcsr04->TriggerPin);	 // trigger high

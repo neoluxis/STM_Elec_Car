@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
+
 #include "stm32f10x.h"
 #include "hcsr04.h"
 #include "oled.h"
@@ -22,7 +23,7 @@
  */
 HCSR04_Structure front, left, right;
 /**
- * @brief Motor object, left, right 
+ * @brief Motor object, left, right
  *
  */
 MOTOR_Structure motor_l, motor_r;
@@ -30,7 +31,7 @@ MOTOR_Structure motor_l, motor_r;
  * @brief Distance, front, left, right
  *
  */
-int d_f = 0, d_l = 0, d_r = 0;
+double d_f = 0, d_l = 0, d_r = 0;
 
 /**
  * @brief Initialise the direction control
@@ -72,13 +73,13 @@ int main(void)
 	// Main loop
 	while (1)
 	{
+		info("%f, %f, %f", d_l, d_r, d_f);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(5);
 		d_l = HCSR04_GetDistance(&left);
 		delay_ms(5);
 		d_r = HCSR04_GetDistance(&right);
 		delay_ms(5);
-		info("%d, %d, %d", d_l, d_r, d_f);
 		Dir_Ctrl();
 	}
 	// return 0;
