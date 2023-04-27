@@ -188,6 +188,64 @@ void MOTOR_Dir_Init(void)
 	}
 }
 
+void Dir_Ctrl(void)
+{
+	// If front distance is smaller than 20cm, stop and turn left or right
+	if (d_f < 20)
+	{
+		// Stop
+		MOTOR_SetDirection(&motor_l, MOTOR_NOWORK);
+		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
+		// Speed slow down
+		MOTOR_SetSpeed(&motor_l, 7000);
+		MOTOR_SetSpeed(&motor_r, 7000);
+		// Turn left or right
+		// If left distance is smaller than right distance, turn right
+		if (d_l < d_r - 5 || d_l > 50)
+		{
+			MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
+			MOTOR_SetDirection(&motor_r, MOTOR_BACKWARD);
+		}
+		// If right distance is smaller than or equal to left distance, turn left
+		else if (d_l >= d_r + 5 || d_r > 50)
+		{
+			MOTOR_SetDirection(&motor_l, MOTOR_BACKWARD);
+			MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
+		}
+	}
+	// If front distance is smaller than 40cm, slow down and
+	else if (d_f < 40)
+	{
+		MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
+		MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
+		// Speed slow down
+		MOTOR_SetSpeed(&motor_l, 7000);
+		MOTOR_SetSpeed(&motor_r, 7000);
+		// Turn left or right
+		// If left distance is smaller than right distance, turn right
+		if (d_l < d_r - 5 || d_l > 50)
+		{
+			MOTOR_SetSpeed(&motor_l, 7000);
+			MOTOR_SetSpeed(&motor_r, 6000);
+		}
+		// If right distance is smaller than or equal to left distance, turn left
+		else if (d_l >= d_r + 5 || d_r > 50)
+		{
+			MOTOR_SetSpeed(&motor_l, 6000);
+			MOTOR_SetSpeed(&motor_r, 7000);
+		}
+	}
+	// if the front distance is larger than 40cm, go straight
+	else
+	{
+		// Go straight
+		MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
+		MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
+		// Speed up
+		MOTOR_SetSpeed(&motor_l, 7000);
+		MOTOR_SetSpeed(&motor_r, 7000);
+	}
+}
 
 void TIM7_IRQHandler(void)
 {
