@@ -50,13 +50,6 @@ void MOTOR_Dir_Init(void);
  *
  * @note The direction control is based on the distance of the front, left and right
  *
- * @note 1. While the front distance is less than 20cm, the car will stop, then turn left or right.
- * @note 2. While the front distance is less than 40cm, the car will slow down and turn left or right.
- * @note 3. While the front distance is more than 40cm, the car will go straight.
- * @note 4. Measure the distance of left and right(done), which side is closer, turn to the other side.
- * @note 5. If the left and right distance are the same, turn left.
- * @note 6. If the left or right distance is more than 50cm, turn to the other side. Avoid going out from the entrance.
- *
  */
 void Dir_Ctrl(void);
 
@@ -230,6 +223,7 @@ void Dir_Ctrl(void)
 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
 		}
 	}
+	delay_ms(10);
 }
 
 void TIM7_IRQHandler(void)
