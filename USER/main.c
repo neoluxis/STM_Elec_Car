@@ -65,8 +65,7 @@ int main(void)
 	// Initialise
 	{
 		delay_init();
-		uart_init(1152000);
-		OLED_Init();
+		uart_init(115200);
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
 	}
@@ -91,8 +90,8 @@ void HCSR_Dir_Init(void)
 	{
 		front.RCC_APBxPeriph_GPIOx_Trigger = RCC_APB2Periph_GPIOB;
 		front.RCC_APBxPeriph_GPIOx_Echo = RCC_APB2Periph_GPIOB;
-		front.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM4;
-		front.TIMx = TIM4;
+		front.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM7;
+		front.TIMx = TIM7;
 		front.TriggerPort = GPIOB;
 		front.TriggerPin = GPIO_Pin_0;
 		front.EchoPort = GPIOB;
@@ -103,7 +102,7 @@ void HCSR_Dir_Init(void)
 		front.RCC_APBxPeriphClockCmd_Trigger = RCC_APB2PeriphClockCmd;
 		front.RCC_APBxPeriphClockCmd_Echo = RCC_APB2PeriphClockCmd;
 		front.RCC_APBxPeriphClockCmd_TIMx = RCC_APB1PeriphClockCmd;
-		front.NVIC_IRQ_Channel = TIM4_IRQn;
+		front.NVIC_IRQ_Channel = TIM7_IRQn;
 		HCSR04_Init(&front);
 	}
 	// left
@@ -156,9 +155,9 @@ void MOTOR_Dir_Init(void)
 		motor_l.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM2;
 		motor_l.TIMx = TIM2;
 		motor_l.IN1_Port = GPIOC;
-		motor_l.IN1_Pin = GPIO_Pin_10;
+		motor_l.IN1_Pin = GPIO_Pin_0;
 		motor_l.IN2_Port = GPIOC;
-		motor_l.IN2_Pin = GPIO_Pin_11;
+		motor_l.IN2_Pin = GPIO_Pin_1;
 		motor_l.OCx = TIM_OC1Init;
 		motor_l.OCx_PreloadConfig = TIM_OC1PreloadConfig;
 		motor_l.SetCompare = TIM_SetCompare1;
@@ -175,10 +174,10 @@ void MOTOR_Dir_Init(void)
 		motor_r.RCC_APBxPeriph_GPIOx_IN2 = RCC_APB2Periph_GPIOC;
 		motor_r.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM2;
 		motor_r.TIMx = TIM2;
-		motor_r.IN1_Port = GPIOB;
-		motor_r.IN1_Pin = GPIO_Pin_5;
-		motor_r.IN2_Port = GPIOB;
-		motor_r.IN2_Pin = GPIO_Pin_6;
+		motor_r.IN1_Port = GPIOC;
+		motor_r.IN1_Pin = GPIO_Pin_2;
+		motor_r.IN2_Port = GPIOC;
+		motor_r.IN2_Pin = GPIO_Pin_3;
 		motor_r.OCx = TIM_OC2Init;
 		motor_r.OCx_PreloadConfig = TIM_OC2PreloadConfig;
 		motor_r.SetCompare = TIM_SetCompare2;
@@ -202,13 +201,13 @@ void Dir_Ctrl(void)
 		MOTOR_SetSpeed(&motor_r, 2000);
 		// Turn left or right
 		// If left distance is smaller than right distance, turn right
-		if (d_l < d_r || d_l > 50)
+		if (d_l < d_r - 5 || d_l > 50)
 		{
 			MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
 			MOTOR_SetDirection(&motor_r, MOTOR_BACKWARD);
 		}
 		// If right distance is smaller than or equal to left distance, turn left
-		else if (d_l >= d_r || d_r > 50)
+		else if (d_l >= d_r + 5 || d_r > 50)
 		{
 			MOTOR_SetDirection(&motor_l, MOTOR_BACKWARD);
 			MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
@@ -224,13 +223,13 @@ void Dir_Ctrl(void)
 		MOTOR_SetSpeed(&motor_r, 2000);
 		// Turn left or right
 		// If left distance is smaller than right distance, turn right
-		if (d_l < d_r || d_l > 50)
+		if (d_l < d_r - 5 || d_l > 50)
 		{
 			MOTOR_SetSpeed(&motor_l, 4000);
 			MOTOR_SetSpeed(&motor_r, 2000);
 		}
 		// If right distance is smaller than or equal to left distance, turn left
-		else if (d_l >= d_r || d_r > 50)
+		else if (d_l >= d_r + 5 || d_r > 50)
 		{
 			MOTOR_SetSpeed(&motor_l, 2000);
 			MOTOR_SetSpeed(&motor_r, 4000);
@@ -248,13 +247,13 @@ void Dir_Ctrl(void)
 	}
 }
 
-void TIM4_IRQHandler(void)
+void TIM7_IRQHandler(void)
 {
-	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
+	if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
 	{
 		front.N++;
 	}
-	TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+	TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
 }
 
 void TIM5_IRQHandler(void)

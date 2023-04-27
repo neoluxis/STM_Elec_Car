@@ -73,4 +73,13 @@ void MOTOR_SetSpeed(MOTOR_Structure *motor, uint16_t cmp);
  */
 void MOTOR_SetDirection(MOTOR_Structure *motor, uint8_t dir);
 
+/**
+ * @brief Set the motor speed and direction
+ * 
+ * @param motor The motor to be adjusted
+ * @param dir The direction to be set, Available values are: MOTOR_FORWARD,
+ * @param cmp The speed to be set
+ */
+void MOTOR_Set(MOTOR_Structure *motor, uint8_t dir, uint16_t cmp);
+
 #endif

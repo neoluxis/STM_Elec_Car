@@ -44,7 +44,7 @@ double HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 {
 	GPIO_ResetBits(hcsr04->TriggerPort, hcsr04->TriggerPin); // trigger low
 	GPIO_SetBits(hcsr04->TriggerPort, hcsr04->TriggerPin);	 // trigger high
-	delay_us(10);											 // 10us pulse
+	delay_us(15);											 // 10us pulse
 	GPIO_ResetBits(hcsr04->TriggerPort, hcsr04->TriggerPin); // trigger low
 	while (GPIO_ReadInputDataBit(hcsr04->EchoPort, hcsr04->EchoPin) == 0)
 		;
@@ -52,7 +52,7 @@ double HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 	while (GPIO_ReadInputDataBit(hcsr04->EchoPort, hcsr04->EchoPin) == 1)
 		;
 	hcsr04->count = TIM_GetCounter(hcsr04->TIMx);
-	if ((float)hcsr04->count / 58 < 100)
+	if ((float)hcsr04->count / 58 <= 150)
 	{
 		hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715
 	}

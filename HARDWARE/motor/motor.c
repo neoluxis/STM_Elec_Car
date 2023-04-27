@@ -85,3 +85,9 @@ void MOTOR_SetDirection(MOTOR_Structure *motor, uint8_t dir)
 		break;
 	}
 }
+
+void MOTOR_Set(MOTOR_Structure *motor, uint8_t dir, uint16_t cmp)
+{
+	MOTOR_SetDirection(motor, dir);
+	MOTOR_SetSpeed(motor, cmp);
+}
