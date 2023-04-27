@@ -188,6 +188,7 @@ void MOTOR_Dir_Init(void)
 	}
 }
 
+/**
 void Dir_Ctrl(void)
 {
 	// If front distance is smaller than 20cm, stop and turn left or right
@@ -197,8 +198,8 @@ void Dir_Ctrl(void)
 		MOTOR_SetDirection(&motor_l, MOTOR_NOWORK);
 		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
 		// Speed slow down
-		MOTOR_SetSpeed(&motor_l, 7000);
-		MOTOR_SetSpeed(&motor_r, 7000);
+		MOTOR_SetSpeed(&motor_l, 0);
+		MOTOR_SetSpeed(&motor_r, 0);
 		// Turn left or right
 		// If left distance is smaller than right distance, turn right
 		if (d_l < d_r - 5 || d_l > 50)
@@ -219,20 +220,20 @@ void Dir_Ctrl(void)
 		MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
 		MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
 		// Speed slow down
-		MOTOR_SetSpeed(&motor_l, 7000);
-		MOTOR_SetSpeed(&motor_r, 7000);
+		MOTOR_SetSpeed(&motor_l, 0);
+		MOTOR_SetSpeed(&motor_r, 0);
 		// Turn left or right
 		// If left distance is smaller than right distance, turn right
 		if (d_l < d_r - 5 || d_l > 50)
 		{
-			MOTOR_SetSpeed(&motor_l, 7000);
-			MOTOR_SetSpeed(&motor_r, 6000);
+			MOTOR_SetSpeed(&motor_l, 0);
+			MOTOR_SetSpeed(&motor_r, 0);
 		}
 		// If right distance is smaller than or equal to left distance, turn left
 		else if (d_l >= d_r + 5 || d_r > 50)
 		{
-			MOTOR_SetSpeed(&motor_l, 6000);
-			MOTOR_SetSpeed(&motor_r, 7000);
+			MOTOR_SetSpeed(&motor_l, 0);
+			MOTOR_SetSpeed(&motor_r, 0);
 		}
 	}
 	// if the front distance is larger than 40cm, go straight
@@ -242,8 +243,52 @@ void Dir_Ctrl(void)
 		MOTOR_SetDirection(&motor_l, MOTOR_FORWARD);
 		MOTOR_SetDirection(&motor_r, MOTOR_FORWARD);
 		// Speed up
-		MOTOR_SetSpeed(&motor_l, 7000);
-		MOTOR_SetSpeed(&motor_r, 7000);
+		MOTOR_SetSpeed(&motor_l, 0);
+		MOTOR_SetSpeed(&motor_r, 0);
+	}
+}**/
+
+void Dir_Ctrl(void)
+{
+	if (d_f > ALERT_DISTANCE)
+	{
+		MOTOR_Set(&motor_l, MOTOR_FORWARD, START);
+		MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
+	}
+	else if (d_f <= ALERT_DISTANCE && d_f > BRAKE_DISTANCE)
+	{
+		if (d_l - d_r > 10)
+		{
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
+			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
+		}
+		else if (d_r - d_l > 10)
+		{
+			MOTOR_Set(&motor_l, MOTOR_FORWARD, START - 500);
+			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 500);
+		}
+		else
+		{
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
+			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
+		}
+	}
+	else
+	{
+		MOTOR_Set(&motor_l, MOTOR_NOWORK, START);
+		MOTOR_Set(&motor_r, MOTOR_NOWORK, START);
+		if (d_l - d_r > 10)
+		{
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
+		}
+		else if (d_r - d_l > 10)
+		{
+			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 1000);
+		}
+		else
+		{
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
+		}
 	}
 }
 

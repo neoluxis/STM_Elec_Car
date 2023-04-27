@@ -52,7 +52,7 @@ double HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 	while (GPIO_ReadInputDataBit(hcsr04->EchoPort, hcsr04->EchoPin) == 1)
 		;
 	hcsr04->count = TIM_GetCounter(hcsr04->TIMx);
-	if ((float)hcsr04->count / 58 <= 150)
+	if ((float)hcsr04->count / 58 <= 200)
 	{
 		hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715
 	}
