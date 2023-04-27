@@ -7,6 +7,6 @@
 #define ALERT_DISTANCE 40
 #define OUT_DISTANCE 100
 
-#define START 5500
+#define START 5000
 
 #endif

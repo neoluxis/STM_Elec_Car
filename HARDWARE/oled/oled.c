@@ -126,7 +126,7 @@ void OLED_ShowNumber(uint8_t x, uint8_t y, double num)
 {
 	char str[30];
 	sprintf(str, "%f", num);
-	OLED_ShowString(x, y, str);
+	OLED_ShowString(x, y, (uint8_t*)str);
 	free(str);
 }
 
@@ -134,7 +134,7 @@ void OLED_ShowInteger(uint8_t x, uint8_t y, int num)
 {
 	char str[30];
 	sprintf(str, "%d", num);
-	OLED_ShowString(x, y, str);
+	OLED_ShowString(x, y, (uint8_t *)str);
 	free(str);
 }
 
