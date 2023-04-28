@@ -29,5 +29,15 @@ void LED1_ON(void);
  *
  */
 void LED1_OFF(void);
+/**
+ * @brief set LED 0 to opposite status
+ *
+ */
+void LED0_TOG(void);
+/**
+ * @brief set LED 1 to opposite status
+ *
+ */
+void LED1_TOG(void);
 
 #endif

@@ -4,6 +4,8 @@
 void LED_Init()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
+	// Enable the GPIO Clock
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOD, ENABLE);
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	// LED0
@@ -32,4 +34,14 @@ void LED1_ON()
 void LED1_OFF()
 {
 	GPIO_SetBits(LED1_GPIO_Port, LED1_GPIO_Pin);
+}
+
+void LED0_TOG()
+{
+	LED0_GPIO_Port->ODR ^= LED0_GPIO_Pin;
+}
+
+void LED1_TOG()
+{
+	LED1_GPIO_Port->ODR ^= LED1_GPIO_Pin;
 }

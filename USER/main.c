@@ -11,6 +11,7 @@
 
 #include "stm32f10x.h"
 #include "hcsr04.h"
+#include "led.h"
 #include "oled.h"
 #include "delay.h"
 #include "usart.h"
@@ -58,6 +59,7 @@ int main(void)
 	// Initialise
 	{
 		delay_init();
+		LED_Init();
 		uart_init(115200);
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
@@ -67,12 +69,14 @@ int main(void)
 	{
 		info("%f, %f, %f", d_l, d_r, d_f);
 		d_f = HCSR04_GetDistance(&front);
-		delay_ms(5);
+		delay_ms(10);
 		d_l = HCSR04_GetDistance(&left);
-		delay_ms(5);
+		delay_ms(10);
 		d_r = HCSR04_GetDistance(&right);
-		delay_ms(5);
+		delay_ms(10);
 		Dir_Ctrl();
+		delay_ms(10);
+		LED0_TOG();
 	}
 	// return 0;
 }

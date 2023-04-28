@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\key;..\HARDWARE\led;..\HARDWARE\oled;..\HARDWARE\pwm;..\HARDWARE\ultrasonic;..\HARDWARE\motor</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\key;..\HARDWARE\led;..\HARDWARE\oled;..\HARDWARE\pwm;..\HARDWARE\ultrasonic;..\HARDWARE\motor;..\HARDWARE\neolux</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -593,6 +593,11 @@
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\motor\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>neolux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\neolux\neolux.c</FilePath>
             </File>
           </Files>
         </Group>
