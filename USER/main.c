@@ -69,7 +69,7 @@ int main(void)
 	// Main loop
 	while (1)
 	{
-		info("%f, %f, %f", d_l, d_r, d_f);
+		info("%f,%f,%f", d_l, d_r, d_f);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(10);
 		d_l = HCSR04_GetDistance(&left);
@@ -79,6 +79,7 @@ int main(void)
 		Dir_Ctrl();
 		delay_ms(10);
 		LED0_TOG();
+		delay_ms(10);
 	}
 	// return 0;
 }
@@ -104,43 +105,43 @@ void HCSR_Dir_Init(void)
 		front.NVIC_IRQ_Channel = TIM7_IRQn;
 		HCSR04_Init(&front);
 	}
-	// left
-	{
-		left.RCC_APBxPeriph_GPIOx_Trigger = RCC_APB2Periph_GPIOB;
-		left.RCC_APBxPeriph_GPIOx_Echo = RCC_APB2Periph_GPIOB;
-		left.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM5;
-		left.TIMx = TIM5;
-		left.TriggerPort = GPIOB;
-		left.TriggerPin = GPIO_Pin_10;
-		left.EchoPort = GPIOB;
-		left.EchoPin = GPIO_Pin_11;
-		left.N = 0;
-		left.distance = 0;
-		left.count = 0;
-		left.RCC_APBxPeriphClockCmd_Trigger = RCC_APB2PeriphClockCmd;
-		left.RCC_APBxPeriphClockCmd_Echo = RCC_APB2PeriphClockCmd;
-		left.RCC_APBxPeriphClockCmd_TIMx = RCC_APB1PeriphClockCmd;
-		left.NVIC_IRQ_Channel = TIM5_IRQn;
-		HCSR04_Init(&left);
-	}
 	// right
 	{
-		right.RCC_APBxPeriph_GPIOx_Trigger = RCC_APB2Periph_GPIOC;
-		right.RCC_APBxPeriph_GPIOx_Echo = RCC_APB2Periph_GPIOC;
-		right.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM6;
-		right.TIMx = TIM6;
-		right.TriggerPort = GPIOC;
-		right.TriggerPin = GPIO_Pin_4;
-		right.EchoPort = GPIOC;
-		right.EchoPin = GPIO_Pin_5;
+		right.RCC_APBxPeriph_GPIOx_Trigger = RCC_APB2Periph_GPIOB;
+		right.RCC_APBxPeriph_GPIOx_Echo = RCC_APB2Periph_GPIOB;
+		right.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM5;
+		right.TIMx = TIM5;
+		right.TriggerPort = GPIOB;
+		right.TriggerPin = GPIO_Pin_10;
+		right.EchoPort = GPIOB;
+		right.EchoPin = GPIO_Pin_11;
 		right.N = 0;
 		right.distance = 0;
 		right.count = 0;
 		right.RCC_APBxPeriphClockCmd_Trigger = RCC_APB2PeriphClockCmd;
 		right.RCC_APBxPeriphClockCmd_Echo = RCC_APB2PeriphClockCmd;
 		right.RCC_APBxPeriphClockCmd_TIMx = RCC_APB1PeriphClockCmd;
-		right.NVIC_IRQ_Channel = TIM6_IRQn;
+		right.NVIC_IRQ_Channel = TIM5_IRQn;
 		HCSR04_Init(&right);
+	}
+	// left
+	{
+		left.RCC_APBxPeriph_GPIOx_Trigger = RCC_APB2Periph_GPIOC;
+		left.RCC_APBxPeriph_GPIOx_Echo = RCC_APB2Periph_GPIOC;
+		left.RCC_APBxPeriph_TIMx = RCC_APB1Periph_TIM6;
+		left.TIMx = TIM6;
+		left.TriggerPort = GPIOC;
+		left.TriggerPin = GPIO_Pin_4;
+		left.EchoPort = GPIOC;
+		left.EchoPin = GPIO_Pin_5;
+		left.N = 0;
+		left.distance = 0;
+		left.count = 0;
+		left.RCC_APBxPeriphClockCmd_Trigger = RCC_APB2PeriphClockCmd;
+		left.RCC_APBxPeriphClockCmd_Echo = RCC_APB2PeriphClockCmd;
+		left.RCC_APBxPeriphClockCmd_TIMx = RCC_APB1PeriphClockCmd;
+		left.NVIC_IRQ_Channel = TIM6_IRQn;
+		HCSR04_Init(&left);
 	}
 }
 
@@ -187,51 +188,6 @@ void MOTOR_Dir_Init(void)
 	}
 }
 
-// void Dir_Ctrl(void)
-// {
-// 	if (d_f > ALERT_DISTANCE)
-// 	{
-// 		MOTOR_Set(&motor_l, MOTOR_FORWARD, START);
-// 		MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
-// 	}
-// 	else if (d_f <= ALERT_DISTANCE && d_f > BRAKE_DISTANCE)
-// 	{
-// 		if (d_l - d_r > 10)
-// 		{
-// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
-// 			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
-// 		}
-// 		else if (d_r - d_l > 10)
-// 		{
-// 			MOTOR_Set(&motor_l, MOTOR_FORWARD, START - 500);
-// 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 500);
-// 		}
-// 		else
-// 		{
-// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
-// 			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		MOTOR_Set(&motor_l, MOTOR_NOWORK, START);
-// 		MOTOR_Set(&motor_r, MOTOR_NOWORK, START);
-// 		if (d_l - d_r > 10)
-// 		{
-// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
-// 		}
-// 		else if (d_r - d_l > 10)
-// 		{
-// 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 1000);
-// 		}
-// 		else
-// 		{
-// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
-// 		}
-// 	}
-// 	delay_ms(10);
-// }
-
 void Dir_Ctrl(void)
 {
 	if (d_f > BRAKE_DISTANCE)
@@ -243,17 +199,17 @@ void Dir_Ctrl(void)
 	{
 		MOTOR_SetDirection(&motor_l, MOTOR_NOWORK);
 		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
-		if (d_l - d_r > 10 || d_r > OUT_DISTANCE)
-		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
-		}
-		else if (d_r - d_l > 10 || d_l > OUT_DISTANCE)
+		if (d_l - d_r > 5 || d_r > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START);
 		}
+		else if (d_r - d_l > 5 || d_l > OUT_DISTANCE)
+		{
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
+		}
 		else
 		{
-			MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
 		}
 	}
 }
