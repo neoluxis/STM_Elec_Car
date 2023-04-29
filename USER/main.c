@@ -9,14 +9,6 @@
  *
  */
 
-#include "stm32f10x.h"
-#include "hcsr04.h"
-#include "led.h"
-#include "oled.h"
-#include "delay.h"
-#include "usart.h"
-#include "motor.h"
-#include "neolux.h"
 #include "main.h"
 
 /**
