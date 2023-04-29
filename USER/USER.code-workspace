@@ -17,7 +17,8 @@
 			"motor.h": "c",
 			"hcsr04.h": "c",
 			"cstdio": "c",
-			"neolux.h": "c"
+			"neolux.h": "c",
+			"main.h": "c"
 		}
 	}
 }

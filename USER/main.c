@@ -16,6 +16,7 @@
 #include "delay.h"
 #include "usart.h"
 #include "motor.h"
+#include "neolux.h"
 #include "main.h"
 
 /**
@@ -63,6 +64,7 @@ int main(void)
 		uart_init(115200);
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
+		printf("%s", NEOLUX);
 	}
 	// Main loop
 	while (1)
@@ -185,49 +187,71 @@ void MOTOR_Dir_Init(void)
 	}
 }
 
+// void Dir_Ctrl(void)
+// {
+// 	if (d_f > ALERT_DISTANCE)
+// 	{
+// 		MOTOR_Set(&motor_l, MOTOR_FORWARD, START);
+// 		MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
+// 	}
+// 	else if (d_f <= ALERT_DISTANCE && d_f > BRAKE_DISTANCE)
+// 	{
+// 		if (d_l - d_r > 10)
+// 		{
+// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
+// 			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
+// 		}
+// 		else if (d_r - d_l > 10)
+// 		{
+// 			MOTOR_Set(&motor_l, MOTOR_FORWARD, START - 500);
+// 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 500);
+// 		}
+// 		else
+// 		{
+// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
+// 			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		MOTOR_Set(&motor_l, MOTOR_NOWORK, START);
+// 		MOTOR_Set(&motor_r, MOTOR_NOWORK, START);
+// 		if (d_l - d_r > 10)
+// 		{
+// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
+// 		}
+// 		else if (d_r - d_l > 10)
+// 		{
+// 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 1000);
+// 		}
+// 		else
+// 		{
+// 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
+// 		}
+// 	}
+// 	delay_ms(10);
+// }
+
 void Dir_Ctrl(void)
 {
-	if (d_f > ALERT_DISTANCE)
+	if (d_f > BRAKE_DISTANCE)
 	{
 		MOTOR_Set(&motor_l, MOTOR_FORWARD, START);
 		MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
 	}
-	else if (d_f <= ALERT_DISTANCE && d_f > BRAKE_DISTANCE)
-	{
-		if (d_l - d_r > 10)
-		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
-			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
-		}
-		else if (d_r - d_l > 10)
-		{
-			MOTOR_Set(&motor_l, MOTOR_FORWARD, START - 500);
-			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 500);
-		}
-		else
-		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 500);
-			MOTOR_Set(&motor_r, MOTOR_FORWARD, START - 500);
-		}
-	}
 	else
 	{
-		MOTOR_Set(&motor_l, MOTOR_NOWORK, START);
-		MOTOR_Set(&motor_r, MOTOR_NOWORK, START);
-		if (d_l - d_r > 10)
+		MOTOR_SetDirection(&motor_l, MOTOR_NOWORK);
+		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
+		if (d_l - d_r > 10 || d_r > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
 		}
-		else if (d_r - d_l > 10)
+		else if (d_r - d_l > 10 || d_l > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 1000);
 		}
-		else
-		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
-		}
 	}
-	delay_ms(10);
 }
 
 void TIM7_IRQHandler(void)

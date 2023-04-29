@@ -5,7 +5,7 @@
 
 #define BRAKE_DISTANCE 20
 #define ALERT_DISTANCE 40
-#define OUT_DISTANCE 100
+#define OUT_DISTANCE 150
 
 #define START 5000
 
