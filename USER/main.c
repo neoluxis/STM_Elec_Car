@@ -245,11 +245,15 @@ void Dir_Ctrl(void)
 		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
 		if (d_l - d_r > 10 || d_r > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START - 1000);
+			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
 		}
 		else if (d_r - d_l > 10 || d_l > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START - 1000);
+			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START);
+		}
+		else
+		{
+			MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
 		}
 	}
 }
