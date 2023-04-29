@@ -27,6 +27,8 @@ MOTOR_Structure motor_l, motor_r;
  */
 double d_f = 0, d_l = 0, d_r = 0;
 
+double flt = 0, frt = 0;
+
 /**
  * @brief Initialise the direction control
  *
@@ -47,6 +49,15 @@ void MOTOR_Dir_Init(void);
  */
 void Dir_Ctrl(void);
 
+/**
+ * @brief Get the Half Diagonal object
+ *
+ * @param fr The distance of the front
+ * @param si The distance of the side
+ * @return double The half diagonal distance
+ */
+double getHalfDiagonal(double fr, double si);
+
 int main(void)
 {
 	// Initialise
@@ -61,7 +72,7 @@ int main(void)
 	// Main loop
 	while (1)
 	{
-		info("%f,%f,%f", d_l, d_r, d_f);
+		info("%f,%f,%f,", d_l, d_r, d_f);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(10);
 		d_l = HCSR04_GetDistance(&left);
@@ -204,6 +215,12 @@ void Dir_Ctrl(void)
 			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
 		}
 	}
+}
+
+double getHalfDiagonal(double fr, double si)
+{
+	double halfDiagonal = sqrt(pow(fr, 2) + pow(si, 2)) / 2;
+	return halfDiagonal;
 }
 
 void TIM7_IRQHandler(void)
