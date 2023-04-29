@@ -10,6 +10,7 @@
  */
 
 #include "main.h"
+#include "math.h"
 
 /**
  * @brief Motor object, front, left, right
@@ -27,7 +28,7 @@ MOTOR_Structure motor_l, motor_r;
  */
 double d_f = 0, d_l = 0, d_r = 0;
 
-double flt = 0, frt = 0;
+double dfl = 0, dfr = 0;
 
 /**
  * @brief Initialise the direction control
@@ -50,7 +51,7 @@ void MOTOR_Dir_Init(void);
 void Dir_Ctrl(void);
 
 /**
- * @brief Get the Half Diagonal object
+ * @brief Get the Half Diagonal distance to the wall
  *
  * @param fr The distance of the front
  * @param si The distance of the side
@@ -72,7 +73,12 @@ int main(void)
 	// Main loop
 	while (1)
 	{
-		info("%f,%f,%f,", d_l, d_r, d_f);
+		info("%f,%f,%f,%f,%f",
+			 d_l,
+			 d_r,
+			 d_f,
+			 dfl,
+			 dfr);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(10);
 		d_l = HCSR04_GetDistance(&left);
@@ -193,26 +199,47 @@ void MOTOR_Dir_Init(void)
 
 void Dir_Ctrl(void)
 {
+	// if (d_f > BRAKE_DISTANCE ||
+	// 	dfr > BRAKE_DISTANCE ||
+	// 	dfl > BRAKE_DISTANCE)
 	if (d_f > BRAKE_DISTANCE)
 	{
-		MOTOR_Set(&motor_l, MOTOR_FORWARD, START);
-		MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
+		MOTOR_Set(&motor_l,
+				  MOTOR_FORWARD,
+				  START);
+		MOTOR_Set(&motor_r,
+				  MOTOR_FORWARD,
+				  START);
 	}
 	else
 	{
-		MOTOR_SetDirection(&motor_l, MOTOR_NOWORK);
-		MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
-		if (d_l - d_r > 5 || d_r > OUT_DISTANCE)
+		MOTOR_SetDirection(&motor_l,
+						   MOTOR_NOWORK);
+		MOTOR_SetDirection(&motor_r,
+						   MOTOR_NOWORK);
+		dfr = getHalfDiagonal(d_f, d_r);
+		dfl = getHalfDiagonal(d_f, d_l);
+		if (d_l - d_r > 5 ||
+			dfl - dfr > 5 ||
+			d_r > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_r, MOTOR_BACKWARD, START);
+			MOTOR_Set(&motor_r,
+					  MOTOR_BACKWARD,
+					  START);
 		}
-		else if (d_r - d_l > 5 || d_l > OUT_DISTANCE)
+		else if (d_r - d_l > 5 ||
+				 dfr - dfl > 5 ||
+				 d_l > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
+			MOTOR_Set(&motor_l,
+					  MOTOR_BACKWARD,
+					  START);
 		}
 		else
 		{
-			MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
+			MOTOR_Set(&motor_l,
+					  MOTOR_BACKWARD,
+					  START);
 		}
 	}
 }
