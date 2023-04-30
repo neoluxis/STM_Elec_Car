@@ -58,7 +58,6 @@ int main(void)
 		MOTOR_Dir_Init();
 		printf("%s\n", NEOLUXLEE_SHADOW);
 		printf("Neolux's Car\n");
-		delay_ms(300);
 	}
 	// Main loop
 	while (1)
@@ -71,6 +70,8 @@ int main(void)
 		d_r = HCSR04_GetDistance(&right);
 		delay_ms(10);
 		Dir_Ctrl();
+		// MOTOR_SetDirection(&motor_l, MOTOR_BRAKE);
+		// MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
 		delay_ms(10);
 		LED0_TOG();
 		delay_ms(10);
@@ -201,9 +202,9 @@ void Dir_Ctrl(void)
 	else
 	{
 		MOTOR_SetDirection(&motor_l,
-						   MOTOR_NOWORK);
+						   MOTOR_BRAKE);
 		MOTOR_SetDirection(&motor_r,
-						   MOTOR_NOWORK);
+						   MOTOR_BRAKE);
 		if (d_l - d_r > 5 ||
 			d_r > OUT_DISTANCE)
 		// if (d_l - d_r > 5)

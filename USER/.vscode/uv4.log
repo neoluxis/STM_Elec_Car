@@ -1,3 +1,65 @@
-Load "..\\OBJ\\Template.axf" 
-Full Chip Erase Done.Programming Done.Verify OK.Application running ...
-Flash Load finished at 20:55:05
+*** Using Compiler 'V5.05 update 1 (build 106)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'Elecar'
+compiling main.c...
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c(59): warning:  #870-D: invalid multibyte character sequence
+  		printf("%s\n", NEOLUXLEE_SHADOW);
+main.c: 28 warnings, 0 errors
+linking...
+Program Size: Code=12040 RO-data=1556 RW-data=76 ZI-data=1508  
+FromELF: creating hex file...
+"..\OBJ\Template.axf" - 0 Error(s), 28 Warning(s).
+Build Time Elapsed:  00:00:02
