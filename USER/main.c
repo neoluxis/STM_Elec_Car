@@ -28,7 +28,7 @@ MOTOR_Structure motor_l, motor_r;
  */
 double d_f = 0, d_l = 0, d_r = 0;
 
-double dfl = 0, dfr = 0;
+// double dfl = 0, dfr = 0;
 
 /**
  * @brief Initialise the direction control
@@ -57,7 +57,7 @@ void Dir_Ctrl(void);
  * @param si The distance of the side
  * @return double The half diagonal distance
  */
-double getHalfDiagonal(double fr, double si);
+// double getHalfDiagonal(double fr, double si);
 
 int main(void)
 {
@@ -65,7 +65,7 @@ int main(void)
 	{
 		delay_init();
 		LED_Init();
-		uart_init(115200);
+		uart_init(9600);
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
 		printf("%s", NEOLUX);
@@ -73,12 +73,13 @@ int main(void)
 	// Main loop
 	while (1)
 	{
-		info("%f,%f,%f,%f,%f",
-			 d_l,
-			 d_r,
-			 d_f,
-			 dfl,
-			 dfr);
+		// info("%f,%f,%f,%f,%f",
+		// 	 d_l,
+		// 	 d_r,
+		// 	 d_f,
+		// 	 dfl,
+		// 	 dfr);
+		info("%f,%f,%f", d_f, d_r, d_l);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(10);
 		d_l = HCSR04_GetDistance(&left);
@@ -214,8 +215,8 @@ void Dir_Ctrl(void)
 	}
 	else
 	{
-		dfr = getHalfDiagonal(d_f, d_r);
-		dfl = getHalfDiagonal(d_f, d_l);
+		// dfr = getHalfDiagonal(d_f, d_r);
+		// dfl = getHalfDiagonal(d_f, d_l);
 		MOTOR_SetDirection(&motor_l,
 						   MOTOR_NOWORK);
 		MOTOR_SetDirection(&motor_r,
@@ -245,11 +246,11 @@ void Dir_Ctrl(void)
 	}
 }
 
-double getHalfDiagonal(double fr, double si)
-{
-	double halfDiagonal = sqrt(pow(fr, 2) + pow(si, 2)) / 2;
-	return halfDiagonal;
-}
+// double getHalfDiagonal(double fr, double si)
+// {
+// 	double halfDiagonal = sqrt(pow(fr, 2) + pow(si, 2)) / 2;
+// 	return halfDiagonal;
+// }
 
 void TIM7_IRQHandler(void)
 {
