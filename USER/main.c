@@ -193,6 +193,11 @@ void Dir_Ctrl(void)
 				  MOTOR_FORWARD,
 				  START);
 	}
+	// else if (d_f == 0)
+	// {
+	// 	MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
+	// 	MOTOR_Set(&motor_r, MOTOR_BACKWARD, START);
+	// }
 	else
 	{
 		MOTOR_SetDirection(&motor_l,
