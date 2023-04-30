@@ -85,6 +85,7 @@ int main(void)
 		delay_ms(10);
 		d_r = HCSR04_GetDistance(&right);
 		delay_ms(10);
+		// MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
 		Dir_Ctrl();
 		delay_ms(10);
 		LED0_TOG();
@@ -220,7 +221,7 @@ void Dir_Ctrl(void)
 		dfr = getHalfDiagonal(d_f, d_r);
 		dfl = getHalfDiagonal(d_f, d_l);
 		if (d_l - d_r > 5 ||
-			dfl - dfr > 5 ||
+			// dfl - dfr > 5 ||
 			d_r > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_r,
@@ -228,7 +229,7 @@ void Dir_Ctrl(void)
 					  START);
 		}
 		else if (d_r - d_l > 5 ||
-				 dfr - dfl > 5 ||
+				 //  dfr - dfl > 5 ||
 				 d_l > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_l,
