@@ -10,7 +10,6 @@
  */
 
 #include "main.h"
-#include "math.h"
 
 /**
  * @brief Motor object, front, left, right
@@ -27,8 +26,6 @@ MOTOR_Structure motor_l, motor_r;
  *
  */
 double d_f = 0, d_l = 0, d_r = 0;
-
-// double dfl = 0, dfr = 0;
 
 /**
  * @brief Initialise the direction control
@@ -50,15 +47,6 @@ void MOTOR_Dir_Init(void);
  */
 void Dir_Ctrl(void);
 
-/**
- * @brief Get the Half Diagonal distance to the wall
- *
- * @param fr The distance of the front
- * @param si The distance of the side
- * @return double The half diagonal distance
- */
-// double getHalfDiagonal(double fr, double si);
-
 int main(void)
 {
 	// Initialise
@@ -73,12 +61,6 @@ int main(void)
 	// Main loop
 	while (1)
 	{
-		// info("%f,%f,%f,%f,%f",
-		// 	 d_l,
-		// 	 d_r,
-		// 	 d_f,
-		// 	 dfl,
-		// 	 dfr);
 		info("%f,%f,%f", d_f, d_r, d_l);
 		d_f = HCSR04_GetDistance(&front);
 		delay_ms(10);
@@ -86,7 +68,6 @@ int main(void)
 		delay_ms(10);
 		d_r = HCSR04_GetDistance(&right);
 		delay_ms(10);
-		// MOTOR_Set(&motor_r, MOTOR_FORWARD, START);
 		Dir_Ctrl();
 		delay_ms(10);
 		LED0_TOG();
@@ -201,9 +182,6 @@ void MOTOR_Dir_Init(void)
 
 void Dir_Ctrl(void)
 {
-	// if (d_f > BRAKE_DISTANCE ||
-	// 	dfr > BRAKE_DISTANCE ||
-	// 	dfl > BRAKE_DISTANCE)
 	if (d_f > BRAKE_DISTANCE)
 	{
 		MOTOR_Set(&motor_l,
@@ -215,25 +193,21 @@ void Dir_Ctrl(void)
 	}
 	else
 	{
-		// dfr = getHalfDiagonal(d_f, d_r);
-		// dfl = getHalfDiagonal(d_f, d_l);
 		MOTOR_SetDirection(&motor_l,
 						   MOTOR_NOWORK);
 		MOTOR_SetDirection(&motor_r,
 						   MOTOR_NOWORK);
 		if (d_l - d_r > 5 ||
-			// dfl - dfr > 5 ||
 			d_r > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_r,
+			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
 					  START);
 		}
 		else if (d_r - d_l > 5 ||
-				 //  dfr - dfl > 5 ||
 				 d_l > OUT_DISTANCE)
 		{
-			MOTOR_Set(&motor_l,
+			MOTOR_Set(&motor_r,
 					  MOTOR_BACKWARD,
 					  START);
 		}
@@ -245,12 +219,6 @@ void Dir_Ctrl(void)
 		}
 	}
 }
-
-// double getHalfDiagonal(double fr, double si)
-// {
-// 	double halfDiagonal = sqrt(pow(fr, 2) + pow(si, 2)) / 2;
-// 	return halfDiagonal;
-// }
 
 void TIM7_IRQHandler(void)
 {
