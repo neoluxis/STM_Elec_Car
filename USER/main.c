@@ -214,12 +214,12 @@ void Dir_Ctrl(void)
 	}
 	else
 	{
+		dfr = getHalfDiagonal(d_f, d_r);
+		dfl = getHalfDiagonal(d_f, d_l);
 		MOTOR_SetDirection(&motor_l,
 						   MOTOR_NOWORK);
 		MOTOR_SetDirection(&motor_r,
 						   MOTOR_NOWORK);
-		dfr = getHalfDiagonal(d_f, d_r);
-		dfl = getHalfDiagonal(d_f, d_l);
 		if (d_l - d_r > 5 ||
 			// dfl - dfr > 5 ||
 			d_r > OUT_DISTANCE)
