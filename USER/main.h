@@ -16,6 +16,6 @@
 #define ALERT_DISTANCE 40
 #define OUT_DISTANCE 150
 
-#define START 4500
+#define START 4200
 
 #endif
