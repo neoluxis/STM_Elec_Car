@@ -56,7 +56,9 @@ int main(void)
 		uart_init(9600);
 		HCSR_Dir_Init();
 		MOTOR_Dir_Init();
-		printf("%s", NEOLUX);
+		printf("%s\n", NEOLUXLEE_SHADOW);
+		printf("Neolux's Car\n");
+		delay_ms(300);
 	}
 	// Main loop
 	while (1)
@@ -186,7 +188,7 @@ void Dir_Ctrl(void)
 	{
 		MOTOR_Set(&motor_l,
 				  MOTOR_FORWARD,
-				  START);
+				  START + 800);
 		MOTOR_Set(&motor_r,
 				  MOTOR_FORWARD,
 				  START);
@@ -199,6 +201,7 @@ void Dir_Ctrl(void)
 						   MOTOR_NOWORK);
 		if (d_l - d_r > 5 ||
 			d_r > OUT_DISTANCE)
+		// if (d_l - d_r > 5)
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
@@ -206,6 +209,7 @@ void Dir_Ctrl(void)
 		}
 		else if (d_r - d_l > 5 ||
 				 d_l > OUT_DISTANCE)
+		// else if (d_r - d_l > 5)
 		{
 			MOTOR_Set(&motor_r,
 					  MOTOR_BACKWARD,
