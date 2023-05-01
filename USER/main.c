@@ -79,8 +79,8 @@ int main(void)
 		d_r = HCSR04_GetDistance(&right);
 		delay_ms(10);
 		Dir_Ctrl();
-		// MOTOR_SetDirection(&motor_l, MOTOR_BRAKE);
-		// MOTOR_SetDirection(&motor_r, MOTOR_NOWORK);
+		// MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
+		// MOTOR_Set(&motor_r, MOTOR_NOWORK, START);
 		delay_ms(10);
 		LED0_TOG();
 		delay_ms(10);
@@ -215,26 +215,61 @@ void Dir_Ctrl(void)
 			MOTOR_Set(&motor_r,
 					  MOTOR_BACKWARD,
 					  START);
-			MOTOR_Set(&motor_l,
-					  MOTOR_FORWARD,
-					  START - 100);
 		}
 		else
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
-					  START);
-			MOTOR_Set(&motor_r,
-					  MOTOR_FORWARD,
-					  START - 100);
+					  START + 300);
+			// MOTOR_Set(&motor_r,
+			// 		  MOTOR_FORWARD,
+			// 		  START - 100);
 		}
 	}
-
+	else if (d_f < ALERT_DISTANCE)
+	{
+		// MOTOR_SetDirection(&motor_l,
+		// 				   MOTOR_BRAKE);
+		// MOTOR_SetDirection(&motor_r,
+		// 				   MOTOR_BRAKE);
+		if (d_l - d_r > 8 ||
+			d_r > OUT_DISTANCE)
+		// if (d_l - d_r > 5)
+		{
+			MOTOR_Set(&motor_l,
+					  MOTOR_FORWARD,
+					  START - 1000);
+			MOTOR_Set(&motor_r,
+					  MOTOR_FORWARD,
+					  START + 1000);
+		}
+		else if (d_r - d_l > 8 ||
+				 d_l > OUT_DISTANCE)
+		// else if (d_r - d_l > 5)
+		{
+			MOTOR_Set(&motor_l,
+					  MOTOR_FORWARD,
+					  START + 1000);
+			MOTOR_Set(&motor_r,
+					  MOTOR_FORWARD,
+					  START - 1000);
+		}
+		else
+		{
+			MOTOR_Set(&motor_l,
+					  MOTOR_BACKWARD,
+					  START + 300);
+			// MOTOR_Set(&motor_r,
+			// 		  MOTOR_FORWARD,
+			// 		  START - 100);
+		}
+		// delay_ms(250);
+	}
 	else
 	{
 		MOTOR_Set(&motor_l,
 				  MOTOR_FORWARD,
-				  START);
+				  START + 600);
 		MOTOR_Set(&motor_r,
 				  MOTOR_FORWARD,
 				  START);
