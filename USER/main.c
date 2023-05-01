@@ -189,7 +189,7 @@ void Dir_Ctrl(void)
 	{
 		MOTOR_Set(&motor_l,
 				  MOTOR_FORWARD,
-				  START + 800);
+				  START + 700);
 		MOTOR_Set(&motor_r,
 				  MOTOR_FORWARD,
 				  START);
