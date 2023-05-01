@@ -10,6 +10,7 @@
  */
 
 #include "main.h"
+#include "math.h"
 
 /**
  * @brief Motor object, front, left, right
@@ -26,6 +27,14 @@ MOTOR_Structure motor_l, motor_r;
  *
  */
 double d_f = 0, d_l = 0, d_r = 0;
+
+double dfr = 0, dfl = 0;
+
+double getDiagonalDistance(double a, double b)
+{
+	double c = a * b / sqrt(a * a + b * b);
+	return c;
+}
 
 /**
  * @brief Initialise the direction control
@@ -185,27 +194,13 @@ void MOTOR_Dir_Init(void)
 
 void Dir_Ctrl(void)
 {
-	if (d_f > BRAKE_DISTANCE)
-	{
-		MOTOR_Set(&motor_l,
-				  MOTOR_FORWARD,
-				  START + 700);
-		MOTOR_Set(&motor_r,
-				  MOTOR_FORWARD,
-				  START);
-	}
-	// else if (d_f == 0)
-	// {
-	// 	MOTOR_Set(&motor_l, MOTOR_BACKWARD, START);
-	// 	MOTOR_Set(&motor_r, MOTOR_BACKWARD, START);
-	// }
-	else
+	if (d_f < BRAKE_DISTANCE)
 	{
 		MOTOR_SetDirection(&motor_l,
 						   MOTOR_BRAKE);
 		MOTOR_SetDirection(&motor_r,
 						   MOTOR_BRAKE);
-		if (d_l - d_r > 5 ||
+		if (d_l - d_r > 8 ||
 			d_r > OUT_DISTANCE)
 		// if (d_l - d_r > 5)
 		{
@@ -213,20 +208,36 @@ void Dir_Ctrl(void)
 					  MOTOR_BACKWARD,
 					  START);
 		}
-		else if (d_r - d_l > 5 ||
+		else if (d_r - d_l > 8 ||
 				 d_l > OUT_DISTANCE)
 		// else if (d_r - d_l > 5)
 		{
 			MOTOR_Set(&motor_r,
 					  MOTOR_BACKWARD,
 					  START);
+			MOTOR_Set(&motor_l,
+					  MOTOR_FORWARD,
+					  START - 100);
 		}
 		else
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
 					  START);
+			MOTOR_Set(&motor_r,
+					  MOTOR_FORWARD,
+					  START - 100);
 		}
+	}
+
+	else
+	{
+		MOTOR_Set(&motor_l,
+				  MOTOR_FORWARD,
+				  START);
+		MOTOR_Set(&motor_r,
+				  MOTOR_FORWARD,
+				  START);
 	}
 }
 
