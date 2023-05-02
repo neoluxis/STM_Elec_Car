@@ -12,9 +12,11 @@
 
 #define info(format, ...) printf(format "\r\n", __VA_ARGS__)
 
-#define BRAKE_DISTANCE 25
-#define ALERT_DISTANCE 40
+#define BRAKE_DISTANCE 20
+#define ALERT_DISTANCE 45
 #define OUT_DISTANCE 130
+
+#define TURN 860
 
 #define START 4500
 

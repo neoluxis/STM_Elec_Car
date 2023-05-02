@@ -194,6 +194,10 @@ void MOTOR_Dir_Init(void)
 
 void Dir_Ctrl(void)
 {
+	if (d_f == 0 || d_r == 0 || d_l == 0)
+	{
+		
+	}
 	if (d_f < BRAKE_DISTANCE)
 	{
 		MOTOR_SetDirection(&motor_l,
@@ -218,7 +222,7 @@ void Dir_Ctrl(void)
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
-					  START + 450);
+					  START + 520);
 		}
 	}
 	else if (d_f < ALERT_DISTANCE)
@@ -228,33 +232,33 @@ void Dir_Ctrl(void)
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_FORWARD,
-					  START - 900);
+					  START - TURN);
 			MOTOR_Set(&motor_r,
 					  MOTOR_FORWARD,
-					  START + 900);
+					  START + TURN);
 		}
 		else if (d_r - d_l > 8 ||
 				 d_l > OUT_DISTANCE)
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_FORWARD,
-					  START + 900);
+					  START + TURN);
 			MOTOR_Set(&motor_r,
 					  MOTOR_FORWARD,
-					  START - 900);
+					  START - TURN);
 		}
 		else
 		{
 			MOTOR_Set(&motor_l,
 					  MOTOR_BACKWARD,
-					  START + 450);
+					  START + 500);
 		}
 	}
-	else
+	else // go straight
 	{
 		MOTOR_Set(&motor_l,
 				  MOTOR_FORWARD,
-				  START + 600);
+				  START + 525);
 		MOTOR_Set(&motor_r,
 				  MOTOR_FORWARD,
 				  START);
