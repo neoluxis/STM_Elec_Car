@@ -53,8 +53,8 @@ double HCSR04_GetDistance(HCSR04_Structure *hcsr04)
 		;
 	hcsr04->count = TIM_GetCounter(hcsr04->TIMx);
 	if (((float)hcsr04->count / 58) < 160)
-		hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715	
-	if (((float)hcsr04->count / 58) < 5)
+		hcsr04->distance = (float)hcsr04->count / 58; // 58 = 1 / 0.00001715
+	if (((float)hcsr04->count / 58) < 6 || ((float)hcsr04->count / 58) > 160)
 		hcsr04->distance = 0;
 	return hcsr04->distance;
 }

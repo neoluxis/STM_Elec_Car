@@ -194,10 +194,47 @@ void MOTOR_Dir_Init(void)
 
 void Dir_Ctrl(void)
 {
-	if (d_f == 0 || d_r == 0 || d_l == 0)
-	{
-		
-	}
+	// if (d_f == 0 || d_r == 0 || d_l == 0)
+	// {
+	// 	MOTOR_SetDirection(&motor_l,
+	// 					   MOTOR_BRAKE);
+	// 	MOTOR_SetDirection(&motor_r,
+	// 					   MOTOR_BRAKE);
+	// 	MOTOR_Set(&motor_l,
+	// 			  MOTOR_BACKWARD,
+	// 			  START);
+	// 	MOTOR_Set(&motor_r,
+	// 			  MOTOR_BACKWARD,
+	// 			  START);
+	// 	// if (d_f == 0)
+	// 	// {
+	// 	// 	MOTOR_Set(&motor_l,
+	// 	// 			  MOTOR_BACKWARD,
+	// 	// 			  START);
+	// 	// 	MOTOR_Set(&motor_r,
+	// 	// 			  MOTOR_BACKWARD,
+	// 	// 			  START);
+	// 	// }
+	// 	// else if (d_r == 0)
+	// 	// {
+	// 	// 	MOTOR_Set(&motor_l,
+	// 	// 			  MOTOR_BACKWARD,
+	// 	// 			  START - TURN);
+	// 	// 	MOTOR_Set(&motor_r,
+	// 	// 			  MOTOR_FORWARD,
+	// 	// 			  START + TURN);
+	// 	// }
+	// 	// else if (d_l == 0)
+	// 	// {
+	// 	// 	MOTOR_Set(&motor_l,
+	// 	// 			  MOTOR_FORWARD,
+	// 	// 			  START + TURN);
+	// 	// 	MOTOR_Set(&motor_r,
+	// 	// 			  MOTOR_BACKWARD,
+	// 	// 			  START - TURN);
+	// 	// }
+	// 	return;
+	// }
 	if (d_f < BRAKE_DISTANCE)
 	{
 		MOTOR_SetDirection(&motor_l,
